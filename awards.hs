@@ -4,6 +4,8 @@ import GreenPoint (greenpoints)
 
 main::IO()
 main = do 
-            ss <- getArgs
-            print $ greenpoints (read (ss!!0)) (read (ss!!1)) (read (ss!!2))
-
+            args <- getArgs
+            let top :: Double   = read (args!!0)
+            let last :: Double  = read (args!!1)
+            let numPlaces:: Int = read (args!!2)
+            print $ greenpoints top last numPlaces
