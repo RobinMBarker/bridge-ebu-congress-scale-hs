@@ -24,14 +24,23 @@ round2dp x = (fromInteger (round (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
 awards top last n = map award [1..n]
-    where   l = (sqrt (( fromIntegral n)/2)) - 2
+    where   n_ = fromIntegral n
+            l = (sqrt (n_/2)) - 2
             k = (top-last)*(l+1)
-            x = ((fromIntegral n)-l)/2
+            x = (n_-l)/2
             y = k/(l + x)
-            award p | (fromIntegral p) > x = last + (y * 
-                        (fromIntegral (n-p))/((fromIntegral n) - x))
-                    | otherwise = last + k / ((fromIntegral p)+l)
+            award p | p_ > x = last + y * (n_ - p_)/(n_ - x)
+                    | otherwise = last + k / (p_ + l)
+                where p_ = fromIntegral p
 
+
+answer, expect :: [Double];
+expect = [4.00, 2.32, 1.68, 1.34, 1.13, 0.96, 0.78, 0.60, 0.43, 0.25]
+
+answer = map round2dp $ awards 4 0.25 10
 
 main::IO()
-main = print $ map round2dp $ awards 4 0.25 10
+main = do 
+            print answer
+            print (answer == expect)
+
