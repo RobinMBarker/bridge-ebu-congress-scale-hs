@@ -24,16 +24,16 @@ round2dp :: RealFrac a => a -> a
 round2dp x = (fromInteger (round (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
-awards top last n   | n <= 2    = take n [top, last]
-                    | otherwise = map (last +) $ map award [1..n]
-    where   n_ = fromIntegral n
-            l = (sqrt (n_/2)) - 2
+awards top last num | num <= 2  = take num [top, last]
+                    | otherwise = map (last +) $ map award [1..num]
+    where   n = fromIntegral num
+            l = (sqrt (n/2)) - 2
             k = (top-last)*(l+1)
-            x = (n_-l)/2
+            x = (n-l)/2
             y = k/(x + l)
-            award p | p_ > x    = y * (n_ - p_)/(n_ - x)
-                    | otherwise = k / (p_ + l)
-                where p_ = fromIntegral p
+            award i | p > x    = y * (n - p)/(n - x)
+                    | otherwise = k / (p + l)
+                where p = fromIntegral i
 
 
 greenpoints :: RealFloat a => a -> a -> Int -> [a] 
