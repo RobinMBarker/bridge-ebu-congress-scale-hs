@@ -25,15 +25,16 @@ round2dp x = (fromInteger (round (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
 awards top last num | num <= 2  = take num [top, last]
-                    | otherwise = map (last +) $ map award [1..num]
+                    | otherwise = map (last +) $
+                                    map award [1..num]
     where   n = fromIntegral num
             l = (sqrt (n/2)) - 2
             k = (top-last)*(l+1)
-            x = (n-l)/2
-            y = k/(x + l)
-            award i | p > x    = y * (n - p)/(n - x)
-                    | otherwise = k / (p + l)
-                where p = fromIntegral i
+            x1 = (n - l)/2
+            y1 = k/(x1 + l)
+            award p | x > x1    = y1 * (n - x)/(n - x1)
+                    | otherwise = k / (x + l)
+                where x = fromIntegral p
 
 
 greenpoints :: RealFloat a => a -> a -> Int -> [a] 
