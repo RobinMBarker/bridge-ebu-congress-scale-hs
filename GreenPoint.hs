@@ -30,10 +30,12 @@ awards top last num | num <= 2  = take num [top, last]
     where   n = fromIntegral num
             l = (sqrt (n/2)) - 2
             k = (top-last)*(l+1)
+            curve x = k / (x + l)
             x1 = (n - l)/2
-            y1 = k/(x1 + l)
-            award p | x > x1    = y1 * (n - x)/(n - x1)
-                    | otherwise = k / (x + l)
+            y1 = curve x1
+            line x = y1 * (n - x)/(n - x1)
+            award p | x > x1    = line x
+                    | otherwise = curve x
                 where x = fromIntegral p
 
 
