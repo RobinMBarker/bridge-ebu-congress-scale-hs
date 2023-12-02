@@ -27,16 +27,16 @@ round2dp :: RealFrac a => a -> a
 round2dp x = (fromInteger (roundHalfUp (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
-awards top last num | num <= 2  = take num [top, last]
-                    | otherwise = map (last +) $
-                                    map award [1..num]
-    where   n = fromIntegral num
-            l = (sqrt (n/2)) - 2
-            k = (top-last)*(l+1)
-            curve x = k / (x + l)
-            x1 = (n - l)/2
+awards top last n | n <= 2      = take n [top, last]
+                  | otherwise   = map (last +) $
+                                    map award [1..n]
+    where   x2 = fromIntegral n
+            x0 = 2 - (sqrt (x2/2)) 
+            k = (top-last)*(1-x0)
+            curve x = k / (x - x0)
+            x1 = (x0 + x2)/2
             y1 = curve x1
-            line x = y1 * (n - x)/(n - x1)
+            line x = y1 * (x2 - x)/(x2 - x1)
             award p | x > x1    = line x
                     | otherwise = curve x
                 where x = fromIntegral p
