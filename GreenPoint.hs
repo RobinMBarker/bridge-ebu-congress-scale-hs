@@ -20,8 +20,11 @@ End If
 -}
 module GreenPoint where
 
+roundHalfUp :: (RealFrac a, Integral b) => a -> b
+roundHalfUp x | x >= 0 = floor (x + 0.5)
+
 round2dp :: RealFrac a => a -> a
-round2dp x = (fromInteger (round (x*100)))/100
+round2dp x = (fromInteger (roundHalfUp (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
 awards top last num | num <= 2  = take num [top, last]
