@@ -9,10 +9,16 @@ ans8, exp8 :: [Double]
 exp8 = [13, 7, 5, 4, 13/4, 5/2, 7/4, 1]
 ans8 = awards 13 1 8
 
+example, expect8 :: [Double]
+example = awards 3.5 0.5 8
+expect8 = [7/2, 2, 3/2, 5/4, 17/16,7/8, 11/16, 1/2]; 
+
 main::IO()
 main = do 
             print answer
             print (answer == expect)
             print ans8
             print (ans8 == exp8)
+            print example
+            print (example == expect8)
 
