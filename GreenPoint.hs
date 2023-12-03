@@ -35,8 +35,8 @@ awards top last n | n <= 2      = take n [top, last]
             k = (top-last)*(1-x0)
             curve x = k / (x - x0)
             x1 = (x0 + x2)/2
-            y1 = curve x1
-            line x = y1 * (x2 - x)/(x2 - x1)
+            m = k/(x1 - x0)^2   -- (top-last)/(x1-x0)^3
+            line x = m * (x2 - x)
             award p | x > x1    = line x
                     | otherwise = curve x
                 where x = fromIntegral p
