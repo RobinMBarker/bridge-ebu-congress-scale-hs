@@ -41,7 +41,12 @@ awards top last n | n <= 2      = take n [top, last]
                     | otherwise = curve x
                 where x = fromIntegral p
 
+greenmasterpoints :: (RealFloat a, Integral b) => 
+                                a -> a -> Int -> [b]
+greenmasterpoints t l n = map (roundHalfUp . (*100)) $ 
+                                awards t l n
 
 greenpoints :: RealFloat a => a -> a -> Int -> [a] 
-greenpoints t l n = map round2dp $ awards t l n
+greenpoints t l n = map ((/100).fromIntegral) $ 
+                                greenmasterpoints t l n
 
