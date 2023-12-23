@@ -1,5 +1,5 @@
 import System.Environment (getArgs)
-import GroupAwards (groupGP)
+import GroupAwards (groupGPs)
 
 main::IO()
 main = do 
@@ -8,5 +8,5 @@ main = do
             let last :: Double  = read (args!!1)
             let numPlaces:: Int = read (args!!2)
             let groups :: [Int] = map read $ drop 3 args
-            print $ groupGP top last numPlaces groups
+            print $ groupGPs top last numPlaces groups
 
