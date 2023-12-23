@@ -23,25 +23,8 @@ module GreenPoint where
 roundHalfUp :: (RealFrac a, Integral b) => a -> b
 roundHalfUp x | x >= 0 = floor (x + 0.5)
 
---  round2dp    renamed as toGP
-
-toMP :: (RealFrac a, Integral b) => a -> b
-toMP = roundHalfUp . (*100)
-
-fromMP :: (Integral b, RealFrac a) => b -> a
-fromMP = (/100) . fromIntegral
-
-toGP :: RealFrac a => a -> a
-toGP = fromMP . toMP
-
-toMPs :: (RealFrac a, Integral b) => [a] -> [b]
-toMPs = map toMP
-
-fromMPs :: (Integral b, RealFrac a) => [b] -> [a]
-fromMPs = map fromMP
-
-toGPs :: RealFrac a => [a] -> [a]
-toGPs = map toGP
+round2dp :: RealFrac a => a -> a
+round2dp x = (fromInteger (roundHalfUp (x*100)))/100
 
 awards :: RealFloat a => a -> a -> Int -> [a]
 awards top last n | n <= 2      = take n [top, last]
@@ -60,8 +43,10 @@ awards top last n | n <= 2      = take n [top, last]
 
 greenmasterpoints :: (RealFloat a, Integral b) => 
                                 a -> a -> Int -> [b]
-greenmasterpoints t l n = toMPs $ awards t l n
+greenmasterpoints t l n = map (roundHalfUp . (*100)) $ 
+                                awards t l n
 
 greenpoints :: RealFloat a => a -> a -> Int -> [a] 
-greenpoints t l n = fromMPs $ greenmasterpoints t l n
+greenpoints t l n = map ((/100).fromIntegral) $ 
+                                greenmasterpoints t l n
 
