@@ -1,12 +1,24 @@
-import System.Environment (getArgs)
-import GreenPoint (greenmasterpoints)
+module GroupAwards where
 
+import GreenPoint
 
-main::IO()
-main = do 
-            args <- getArgs
-            let top :: Double   = read (args!!0)
-            let last :: Double  = read (args!!1)
-            let numPlaces:: Int = read (args!!2)
-            print $ greenmasterpoints top last numPlaces
+tiedAwards :: RealFloat a => [a] -> [Int] -> [a]
+groupAwards :: RealFloat a => a -> a -> Int -> [Int] -> [a]
+groupMPs :: (RealFloat a, Integral b) => 
+                            a -> a -> Int -> [Int] -> [b]
+groupGPs :: RealFloat a => a -> a -> Int -> [Int] -> [a]
 
+groupMPs t l n gs = map toMP $ groupAwards t l n gs
+groupGPs t l n gs = map toGP $ groupAwards t l n gs
+
+groupAwards t l n gs = map (max l) $ tiedAwards (awards t l n) gs
+
+tiedAwards mps gs = tied 0 gs
+    where   l = length mps
+            award n | n > l = 0 | otherwise = mps!!(n-1)
+            tied _ [] = []
+            tied n (g:gs) | n >= l  = []
+                    | otherwise     =   
+                        (sum [award (n+i)|i<-[1..g]])/
+                            (fromIntegral g)
+                        : tied (n+g) gs
