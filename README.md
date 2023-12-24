@@ -13,7 +13,7 @@ Compiled with `ghc --make awards` etc.
 
 - awards: green master point awards as integers
 
--check: test GreenPoint
+- check: test GreenPoint
 
 - greens: green point awards as decimals
 
