@@ -13,7 +13,7 @@ groupGPs t l n gs = map toGP $ groupAwards t l n gs
 
 groupAwards t l n gs = map (max l) $ tiedAwards (awards t l n) gs
 
-tiedAwards mps gs = tied 0 gs
+tiedAwards mps grps = tied 0 grps
     where   l = length mps
             award n | n > l = 0 | otherwise = mps!!(n-1)
             tied _ [] = []
